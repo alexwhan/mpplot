@@ -7,15 +7,14 @@
 #'
 #' @export
 #' @importFrom magrittr %>%
+#' @importFrom ggplot2 aes
 #'
-
-library(ggplot2)
 
 make_ped_plot <- function(ped) {
   ped <- ped %>%
     mpMap:::convertped() %>%
     dplyr::mutate(generation = make_gen(.)) %>%
-    group_by(generation) %>%
+    dplyr::group_by(generation) %>%
     dplyr::mutate(rel_id = row_number() / (n() - 1),
            rel_id = rel_id - rel_id[1])
 
@@ -37,10 +36,10 @@ make_ped_plot <- function(ped) {
 
   ped_path <- bind_rows(ped_parent, ped_progeny)
 
-  ped_plot <- ggplot(ped, aes(rel_id, generation)) + geom_point() +
-    geom_line(data = ped_path, aes(group = join_id, colour = parent), alpha = 0.5) +
-    scale_y_reverse() +
-    geom_text(data = dplyr::filter(ped, generation == 1), aes(label = id, y = generation - 0.05)) +
-    theme(panel.grid = element_blank(), axis.text.x = element_blank())
+  ped_plot <- ggplot2::ggplot(ped, aes(rel_id, generation)) + ggplot2::geom_point() +
+    ggplot2::geom_line(data = ped_path, aes(group = join_id, colour = parent), alpha = 0.5) +
+    ggplot2::scale_y_reverse() +
+    ggplot2::geom_text(data = dplyr::filter(ped, generation == 1), aes(label = id, y = generation - 0.05)) +
+    ggplot2::theme(panel.grid = ggplot2::element_blank(), axis.text.x = ggplot2::element_blank())
   return(ped_plot)
 }

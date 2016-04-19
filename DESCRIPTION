@@ -9,9 +9,10 @@ Authors@R: c(
 Depends:
     R (>= 2.14)
 Imports:
-    dplyr (> 0.4),
+    dplyr (>= 0.4),
     ggplot2,
     mpMap
 Description: A set of visualisation tools for multiparental populations
 License: GPL-2
 LazyData: TRUE
+RoxygenNote: 5.0.1
